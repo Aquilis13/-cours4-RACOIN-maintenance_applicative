@@ -5,7 +5,8 @@
         "twig/twig": "3.*",
         "illuminate/database": "11.*",
         "ext-mysqli": "*",
-        "ext-pdo": "*"
+        "ext-pdo": "*",
+        "phpunit/phpunit": "^11.0.7"
     },
     "autoload":{
         "psr-0":{
@@ -18,5 +19,8 @@
         "allow-plugins": {
             "kylekatarnls/update-helper": true
         }
+    },
+    "scripts": {
+        "phpunit":"phpunit Tests/*"
     }
 }
