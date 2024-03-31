@@ -47,7 +47,36 @@ class addItem
         $password         = trim($_POST['psw']);
         $password_confirm = trim($_POST['confirm-psw']);
 
-        // Tableau d'erreurs personnalisées
+        // On récupère le tableau avec les erreurs
+        $errors = $this->validFields($nom, $email, $phone, $ville, $departement, $categorie, $title, $description, $price, $password, $password_confirm);
+
+        // S'il y a des erreurs on redirige vers la page d'erreur
+        if (!empty($errors)) {
+
+            $template = $twig->load("add-error.html.twig");
+            echo $template->render(array(
+                    "breadcrumb" => $menu,
+                    "chemin"     => $chemin,
+                    "errors"     => $errors
+                )
+            );
+        } // sinon on ajoute à la base et on redirige vers une page de succès
+        else {
+            $this->saveAnnonce($allPostVars);
+
+            $template = $twig->load("add-confirm.html.twig");
+            echo $template->render(array(
+                "breadcrumb" => $menu, 
+                "chemin" => $chemin
+            ));
+        }
+    }
+
+    /**
+     * Vérifie la validité des champs du formulaire
+     * 
+     */
+    private function validFields($nom, $email, $phone, $ville, $departement, $categorie, $title, $description, $price, $password, $password_confirm){
         $errors                          = array();
         $errors['nameAdvertiser']        = '';
         $errors['emailAdvertiser']       = '';
@@ -93,43 +122,32 @@ class addItem
         }
 
         // On vire les cases vides
-        $errors = array_values(array_filter($errors));
+        return array_values(array_filter($errors));
+    }
 
-        // S'il y a des erreurs on redirige vers la page d'erreur
-        if (!empty($errors)) {
+    /**
+     * Enregistre l'annonce en base
+     * 
+     */
+    private function saveAnnonce($allPostVars){
+        $annonce   = new Annonce();
+        $annonceur = new Annonceur();
 
-            $template = $twig->load("add-error.html.twig");
-            echo $template->render(array(
-                    "breadcrumb" => $menu,
-                    "chemin"     => $chemin,
-                    "errors"     => $errors
-                )
-            );
-        } // sinon on ajoute à la base et on redirige vers une page de succès
-        else {
-            $annonce   = new Annonce();
-            $annonceur = new Annonceur();
+        $annonceur->email         = htmlentities($allPostVars['email']);
+        $annonceur->nom_annonceur = htmlentities($allPostVars['nom']);
+        $annonceur->telephone     = htmlentities($allPostVars['phone']);
 
-            $annonceur->email         = htmlentities($allPostVars['email']);
-            $annonceur->nom_annonceur = htmlentities($allPostVars['nom']);
-            $annonceur->telephone     = htmlentities($allPostVars['phone']);
-
-            $annonce->ville          = htmlentities($allPostVars['ville']);
-            $annonce->id_departement = $allPostVars['departement'];
-            $annonce->prix           = htmlentities($allPostVars['price']);
-            $annonce->mdp            = password_hash($allPostVars['psw'], PASSWORD_DEFAULT);
-            $annonce->titre          = htmlentities($allPostVars['title']);
-            $annonce->description    = htmlentities($allPostVars['description']);
-            $annonce->id_categorie   = $allPostVars['categorie'];
-            $annonce->date           = date('Y-m-d');
+        $annonce->ville          = htmlentities($allPostVars['ville']);
+        $annonce->id_departement = $allPostVars['departement'];
+        $annonce->prix           = htmlentities($allPostVars['price']);
+        $annonce->mdp            = password_hash($allPostVars['psw'], PASSWORD_DEFAULT);
+        $annonce->titre          = htmlentities($allPostVars['title']);
+        $annonce->description    = htmlentities($allPostVars['description']);
+        $annonce->id_categorie   = $allPostVars['categorie'];
+        $annonce->date           = date('Y-m-d');
 
 
-            $annonceur->save();
-            $annonceur->annonce()->save($annonce);
-
-
-            $template = $twig->load("add-confirm.html.twig");
-            echo $template->render(array("breadcrumb" => $menu, "chemin" => $chemin));
-        }
+        $annonceur->save();
+        $annonceur->annonce()->save($annonce);
     }
 }
