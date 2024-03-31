@@ -57,19 +57,18 @@ use model\Categorie;
 
     function supprimerItemPost($twig, $menu, $chemin, $n, $cat){
         $this->annonce = Annonce::find($n);
-        $reponse = false;
-        if(password_verify($_POST["pass"],$this->annonce->mdp)){
-            $reponse = true;
+        
+        $validPassword = password_verify($_POST["pass"],$this->annonce->mdp);
+        if($validPassword){
             photo::where('id_annonce', '=', $n)->delete();
             $this->annonce->delete();
-
         }
 
         $template = $twig->load("delPost.html.twig");
         echo $template->render(array("breadcrumb" => $menu,
             "chemin" => $chemin,
             "annonce" => $this->annonce,
-            "pass" => $reponse,
+            "pass" => $validPassword,
             "categories" => $cat));
     }
 
@@ -91,18 +90,14 @@ use model\Categorie;
         $this->categItem = Categorie::find($this->annonce->id_categorie)->nom_categorie;
         $this->dptItem = Departement::find($this->annonce->id_departement)->nom_departement;
 
-        $reponse = false;
-        if(password_verify($_POST["pass"],$this->annonce->mdp)){
-            $reponse = true;
-
-        }
+        $validPassword = password_verify($_POST["pass"],$this->annonce->mdp);
 
         $template = $twig->load("modifyPost.html.twig");
         echo $template->render(array("breadcrumb" => $menu,
             "chemin" => $chemin,
             "annonce" => $this->annonce,
             "annonceur" => $this->annonceur,
-            "pass" => $reponse,
+            "pass" => $validPassword,
             "categories" => $cat,
             "departements" => $dpt,
             "dptItem" => $this->dptItem,
@@ -131,7 +126,53 @@ use model\Categorie;
         $description = trim($_POST['description']);
         $price = trim($_POST['price']);
 
+        // On récupère le tableau avec les erreurs
+        $errors = $this->validFields($nom, $email, $phone, $ville, $departement, $categorie, $title, $description, $price);
 
+        // S'il y a des erreurs on redirige vers la page d'erreur
+        if (!empty($errors)) {
+
+            $template = $twig->load("add-error.html.twig");
+            echo $template->render(array(
+                    "breadcrumb" => $menu,
+                    "chemin" => $chemin,
+                    "errors" => $errors)
+            );
+        }
+        // sinon on ajoute à la base et on redirige vers une page de succès
+        else{
+            $this->annonce = Annonce::find($id);
+            $idannonceur = $this->annonce->id_annonceur;
+            $this->annonceur = Annonceur::find($idannonceur);
+
+            $this->saveAnnonce($allPostVars);
+
+            $template = $twig->load("modif-confirm.html.twig");
+            echo $template->render(array(
+                "breadcrumb" => $menu, 
+                "chemin" => $chemin
+            ));
+        }
+    }
+
+    private function saveAnnonce($allPostVars){
+        $this->annonceur->email = htmlentities($allPostVars['email']);
+        $this->annonceur->nom_annonceur = htmlentities($allPostVars['nom']);
+        $this->annonceur->telephone = htmlentities($allPostVars['phone']);
+        $this->annonce->ville = htmlentities($allPostVars['ville']);
+        $this->annonce->id_departement = $allPostVars['departement'];
+        $this->annonce->prix = htmlentities($allPostVars['price']);
+        $this->annonce->mdp = password_hash ($allPostVars['psw'], PASSWORD_DEFAULT);
+        $this->annonce->titre = htmlentities($allPostVars['title']);
+        $this->annonce->description = htmlentities($allPostVars['description']);
+        $this->annonce->id_categorie = $allPostVars['categorie'];
+        $this->annonce->date = date('Y-m-d');
+        
+        $this->annonceur->save();
+        $this->annonceur->annonce()->save($this->annonce);
+    }
+
+    private function validFields($nom, $email, $phone, $ville, $departement, $categorie, $title, $description, $price){
         // Tableau d'erreurs personnalisées
         $errors = array();
         $errors['nameAdvertiser'] = '';
@@ -175,42 +216,6 @@ use model\Categorie;
         }
 
         // On vire les cases vides
-        $errors = array_values(array_filter($errors));
-
-        // S'il y a des erreurs on redirige vers la page d'erreur
-        if (!empty($errors)) {
-
-            $template = $twig->load("add-error.html.twig");
-            echo $template->render(array(
-                    "breadcrumb" => $menu,
-                    "chemin" => $chemin,
-                    "errors" => $errors)
-            );
-        }
-        // sinon on ajoute à la base et on redirige vers une page de succès
-        else{
-            $this->annonce = Annonce::find($id);
-            $idannonceur = $this->annonce->id_annonceur;
-            $this->annonceur = Annonceur::find($idannonceur);
-
-
-            $this->annonceur->email = htmlentities($allPostVars['email']);
-            $this->annonceur->nom_annonceur = htmlentities($allPostVars['nom']);
-            $this->annonceur->telephone = htmlentities($allPostVars['phone']);
-            $this->annonce->ville = htmlentities($allPostVars['ville']);
-            $this->annonce->id_departement = $allPostVars['departement'];
-            $this->annonce->prix = htmlentities($allPostVars['price']);
-            $this->annonce->mdp = password_hash ($allPostVars['psw'], PASSWORD_DEFAULT);
-            $this->annonce->titre = htmlentities($allPostVars['title']);
-            $this->annonce->description = htmlentities($allPostVars['description']);
-            $this->annonce->id_categorie = $allPostVars['categorie'];
-            $this->annonce->date = date('Y-m-d');
-            $this->annonceur->save();
-            $this->annonceur->annonce()->save($this->annonce);
-
-
-            $template = $twig->load("modif-confirm.html.twig");
-            echo $template->render(array("breadcrumb" => $menu, "chemin" => $chemin));
-        }
+        return array_values(array_filter($errors));
     }
 }
