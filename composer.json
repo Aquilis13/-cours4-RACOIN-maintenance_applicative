@@ -11,8 +11,9 @@
     "autoload":{
         "psr-0":{
             "controller":"",
-            "model":"",
-            "db":""
+            "model": "",
+            "db": "",
+            "actions":""
         }
     },
     "config": {
