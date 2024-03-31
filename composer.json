@@ -13,7 +13,8 @@
             "controller":"",
             "model": "",
             "db": "",
-            "actions":""
+            "actions":"",
+            "middlewares":""
         }
     },
     "config": {
