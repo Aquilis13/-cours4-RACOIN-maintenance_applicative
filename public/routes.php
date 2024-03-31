@@ -13,7 +13,7 @@ return function($app, $twig, $menu, $chemin, $cat, $dpt):void {
     
     $app->post('/add', new actions\ProcessNewItemAction($twig, $app, $menu, $chemin));
     
-    $app->get('/item/{id}/edit', new actions\DisplayEditItemViewAction($twig, $app, $menu, $chemin));
+    $app->get('/item/{id}/edit', new actions\DisplayEditItemViewAction($twig, $menu, $chemin));
     
     $app->post('/item/{id}/edit', new actions\ProcessItemEditAction($twig, $app, $menu, $chemin, $cat, $dpt));
     

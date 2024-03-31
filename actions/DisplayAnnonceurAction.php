@@ -24,7 +24,7 @@ final class DisplayAnnonceurAction {
     }
 
     public function __invoke(Request $request, Response $response, array $args): Response {
-        $n         = $arg['n'];
+        $n         = $args['n'];
         $annonceur = new viewAnnonceur();
         $annonceur->afficherAnnonceur($this->twig, $this->menu, $this->chemin, $n, $this->cat->getCategories());
 

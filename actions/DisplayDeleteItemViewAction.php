@@ -22,7 +22,7 @@ final class DisplayDeleteItemViewAction {
     }
 
     public function __invoke(Request $request, Response $response, array $args): Response {
-        $n    = $arg['n'];
+        $n    = $args['n'];
         $item = new item();
         $item->supprimerItemGet($this->twig, $this->menu, $this->chemin, $n);
 

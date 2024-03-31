@@ -19,7 +19,7 @@ final class DisplayCategorieByIdAction {
     }
 
     public function __invoke(Request $request, Response $response, array $args): Response {
-        $id = $arg['id'];
+        $id = $args['id'];
         $response->headers->set('Content-Type', 'application/json');
         $a     = Annonce::select('id_annonce', 'prix', 'titre', 'ville')
             ->where('id_categorie', '=', $id)

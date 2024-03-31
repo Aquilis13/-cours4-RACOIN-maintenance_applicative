@@ -22,9 +22,9 @@ final class DisplayEditItemViewAction {
     }
 
     public function __invoke(Request $request, Response $response, array $args): Response {
-        $id   = $arg['id'];
+        $id   = $args['id'];
         $item = new item();
-        $item->modifyGet($twig, $menu, $chemin, $id);
+        $item->modifyGet($this->twig, $this->menu, $this->chemin, $id);
 
         return $response;
     }

@@ -29,7 +29,7 @@ final class GenerateNewKeyAction {
         $nom = $_POST['nom'];
 
         $kg = new KeyGenerator();
-        $kg->generateKey($twig, $menu, $chemin, $cat->getCategories(), $nom);
+        $kg->generateKey($this->twig, $this->menu, $this->chemin, $this->cat->getCategories(), $nom);
 
         return $response;
     }

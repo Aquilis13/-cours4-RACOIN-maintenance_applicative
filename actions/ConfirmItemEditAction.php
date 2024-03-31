@@ -23,7 +23,7 @@ final class ConfirmItemEditAction {
     }
 
     public function __invoke(Request $request, Response $response, array $args): Response {
-        $id   = $arg['id'];
+        $id   = $args['id'];
         $allPostVars = $request->getParsedBody();
         $item        = new item();
         $item->edit($this->twig, $this->menu, $this->chemin, $this->id, $allPostVars);

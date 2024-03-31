@@ -20,7 +20,7 @@ final class DisplayAnnonceByIdAction {
     }
 
     public function __invoke(Request $request, Response $response, array $args): Response {
-        $id          = $arg['id'];
+        $id          = $args['id'];
         $annonceList = ['id_annonce', 'id_categorie as categorie', 'id_annonceur as annonceur', 'id_departement as departement', 'prix', 'date', 'titre', 'description', 'ville'];
         $return      = Annonce::select($annonceList)->find($id);
 
