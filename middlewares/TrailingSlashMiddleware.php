@@ -12,11 +12,11 @@ class TrailingSlashMiddleware {
         $path = $uri->getPath();
         if ($path != '/' && str_ends_with($path, '/')) {
             $uri = $uri->withPath(substr($path, 0, -1));
+            
             if ($request->getMethod() == 'GET') {
                 return $response->withRedirect((string)$uri, 301);
-            } else {
-                return $next($request->withUri($uri), $response);
-            }
+            } 
+            return $next($request->withUri($uri), $response);
         }
         return $next($request, $response);
     }
