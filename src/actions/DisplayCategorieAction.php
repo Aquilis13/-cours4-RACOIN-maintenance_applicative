@@ -11,12 +11,12 @@ use App\controller\getCategorie;
  */
 final class DisplayCategorieAction {
 
-    private $twig; 
-    private $menu; 
-    private $chemin; 
-    private $cat;
+    private \Twig\Environment $twig; 
+    private array $menu; 
+    private string $chemin; 
+    private getCategorie $cat;
 
-    public function __construct($twig, $menu, $chemin, $cat) {
+    public function __construct(\Twig\Environment $twig, array $menu, string $chemin, getCategorie $cat) {
         $this->twig = $twig; 
         $this->menu = $menu; 
         $this->chemin = $chemin; 

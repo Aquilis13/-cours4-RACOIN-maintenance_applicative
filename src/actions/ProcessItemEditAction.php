@@ -5,20 +5,22 @@ namespace App\actions;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use App\controller\item;
+use App\controller\getCategorie;
+use App\controller\getDepartment;
 
 /**
  * Route : [POST] -> /item/{id}/edit
  */
 final class ProcessItemEditAction {
 
-    private $app; 
-    private $twig; 
-    private $menu; 
-    private $chemin; 
-    private $cat;
-    private $dpt; 
+    private \Slim\App $app; 
+    private \Twig\Environment $twig; 
+    private array $menu; 
+    private string $chemin; 
+    private getCategorie $cat;
+    private getDepartment $dpt; 
 
-    public function __construct($twig, $app, $menu, $chemin, $cat, $dpt) {
+    public function __construct(\Twig\Environment $twig, \Slim\App $app, array $menu, string $chemin, getCategorie $cat, getDepartment $dpt) {
         $this->app = $app; 
         $this->twig = $twig; 
         $this->menu = $menu; 

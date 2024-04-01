@@ -5,20 +5,22 @@ namespace App\actions;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use App\controller\addItem;
+use App\controller\getCategorie;
+use App\controller\getDepartment;
 
 /**
  * Route : [GET] -> /add
  */
 final class DisplayAddItemViewAction {
     
-    private $twig; 
-    private $app;
-    private $menu; 
-    private $chemin; 
-    private $cat;
-    private $dpt;
+    private \Twig\Environment $twig; 
+    private array $menu; 
+    private string $chemin; 
+    private \Slim\App $app; 
+    private getCategorie $cat;
+    private getDepartment $dpt;
 
-    public function __construct($twig, $app, $menu, $chemin, $cat, $dpt) {
+    public function __construct(\Twig\Environment $twig, \Slim\App $app, array $menu, string $chemin, getCategorie $cat, getDepartment $dpt) {
         $this->twig = $twig; 
         $this->app = $app; 
         $this->menu = $menu; 

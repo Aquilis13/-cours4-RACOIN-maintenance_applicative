@@ -11,11 +11,11 @@ use App\controller\item;
  */
 final class DisplayEditItemViewAction {
 
-    private $twig; 
-    private $menu; 
-    private $chemin; 
+    private \Twig\Environment $twig; 
+    private array $menu; 
+    private string $chemin;
 
-    public function __construct($twig, $menu, $chemin) {
+    public function __construct(\Twig\Environment $twig, array $menu, string $chemin) {
         $this->twig = $twig; 
         $this->menu = $menu; 
         $this->chemin = $chemin; 

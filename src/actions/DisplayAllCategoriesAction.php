@@ -11,9 +11,9 @@ use App\model\Categorie;
  */
 final class DisplayAllCategoriesAction {
 
-    private $app;
+    private \Slim\App $app;
 
-    public function __construct($app) {
+    public function __construct(\Slim\App $app) {
         $this->app = $app;
     }
 

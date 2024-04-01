@@ -5,19 +5,20 @@ namespace App\actions;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use App\controller\KeyGenerator;
+use App\controller\getCategorie;
 
 /**
  * Route : [GET] -> /api/key
  */
 final class DisplayKeyGeneratorViewAction {
 
-    private $app; 
-    private $twig; 
-    private $menu; 
-    private $chemin; 
-    private $cat;
+    private \Slim\App $app; 
+    private \Twig\Environment $twig; 
+    private array $menu; 
+    private string $chemin; 
+    private getCategorie $cat;
 
-    public function __construct($app, $twig, $menu, $chemin, $cat) {
+    public function __construct(\Slim\App $app, \Twig\Environment $twig, array $menu, string $chemin, getCategorie $cat) {
         $this->app = $app;
         $this->twig = $twig; 
         $this->menu = $menu; 

@@ -11,12 +11,12 @@ use App\controller\addItem;
  */
 final class ProcessNewItemAction {
 
-    private $app; 
-    private $twig; 
-    private $menu; 
-    private $chemin; 
+    private \Twig\Environment $twig; 
+    private array $menu; 
+    private string $chemin; 
+    private \Slim\App $app;
 
-    public function __construct($twig, $app, $menu, $chemin) {
+    public function __construct(\Twig\Environment $twig, \Slim\App $app, array $menu, string $chemin) {
         $this->app = $app; 
         $this->twig = $twig; 
         $this->menu = $menu; 

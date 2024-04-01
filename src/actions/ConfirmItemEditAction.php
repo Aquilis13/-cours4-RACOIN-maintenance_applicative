@@ -10,12 +10,12 @@ use Psr\Http\Message\ServerRequestInterface as Request;
  */
 final class ConfirmItemEditAction {
  
-    private $twig; 
-    private $menu; 
-    private $chemin; 
-    private $app;
+    private \Twig\Environment $twig; 
+    private array $menu; 
+    private string $chemin; 
+    private \Slim\App $app;
 
-    public function __construct($twig, $app, $menu, $chemin) {
+    public function __construct(\Twig\Environment $twig, \Slim\App $app, array $menu, string $chemin) {
         $this->twig = $twig; 
         $this->menu = $menu; 
         $this->chemin = $chemin; 
