@@ -8,13 +8,12 @@ class KeyGenerator {
 
     function show($twig, $menu, $chemin, $cat) {
         $template = $twig->load("key-generator.html.twig");
-        $menu = array(
-            array('href' => $chemin,
-                'text' => 'Acceuil'),
-            array('href' => $chemin."/search",
-                'text' => "Recherche")
-        );
-        echo $template->render(array("breadcrumb" => $menu, "chemin" => $chemin, "categories" => $cat));
+
+        echo $template->render(array(
+            "breadcrumb" => $this->sendMenu($chemin), 
+            "chemin" => $chemin, 
+            "categories" => $cat
+        ));
     }
 
     function generateKey($twig, $menu, $chemin, $cat, $nom) {
@@ -22,22 +21,14 @@ class KeyGenerator {
 
         if($nospace_nom === '') {
             $template = $twig->load("key-generator-error.html.twig");
-            $menu = array(
-                array('href' => $chemin,
-                    'text' => 'Acceuil'),
-                array('href' => $chemin."/search",
-                    'text' => "Recherche")
-            );
 
-            echo $template->render(array("breadcrumb" => $menu, "chemin" => $chemin, "categories" => $cat));
+            echo $template->render(array(
+                "breadcrumb" => $this->sendMenu($chemin), 
+                "chemin" => $chemin, 
+                "categories" => $cat
+            ));
         } else {
             $template = $twig->load("key-generator-result.html.twig");
-            $menu = array(
-                array('href' => $chemin,
-                    'text' => 'Acceuil'),
-                array('href' => $chemin."/search",
-                    'text' => "Recherche")
-            );
 
             // Génere clé unique de 13 caractères
             $key = uniqid();
@@ -48,11 +39,27 @@ class KeyGenerator {
             $apikey->name_key = htmlentities($nom);
             $apikey->save();
 
-            echo $template->render(array("breadcrumb" => $menu, "chemin" => $chemin, "categories" => $cat, "key" => $key));
+            echo $template->render(array(
+                "breadcrumb" => $this->sendMenu($chemin), 
+                "chemin" => $chemin, 
+                "categories" => $cat, 
+                "key" => $key));
         }
 
     }
 
+    public function sendMenu($chemin){
+        return array(
+            array(
+                'href' => $chemin,
+                'text' => 'Acceuil'
+            ),
+            array(
+                'href' => $chemin."/search",
+                'text' => "Recherche"
+            )
+        );
+    }
 }
 
 ?>
