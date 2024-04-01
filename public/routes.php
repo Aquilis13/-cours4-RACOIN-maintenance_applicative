@@ -33,27 +33,16 @@ return function($app, $twig, $menu, $chemin, $cat, $dpt):void {
     
     $app->get('/api(/)', new actions\DisplayApiViewAction($twig, $menu, $chemin, $cat));
     
-    $app->group('/api', function () use ($app, $twig, $menu, $chemin, $cat) {
-    
-        $app->group('/annonce', function () use ($app) {
-            $app->get('/{id}', new actions\DisplayAnnonceByIdAction($app));
-        });
-    
-        $app->group('/annonces(/)', function () use ($app) {
-            $app->get('/', new actions\DisplayAllAnnoncesAction($app));
-        });
-    
-        $app->group('/categorie', function () use ($app) {
-            $app->get('/{id}', new actions\DisplayCategorieByIdAction($app));
-        });
-    
-        $app->group('/categories(/)', function () use ($app) {
-            $app->get('/', new actions\DisplayAllCategoriesAction($app));
-        });
-    
-        $app->get('/key', new actions\DisplayKeyGeneratorViewAction($app, $twig, $menu, $chemin, $cat));
-    
-        $app->post('/key', new actions\GenerateNewKeyAction($app, $twig, $menu, $chemin, $cat));
-    });
+    $app->get('/api/annonce/{id}', new actions\DisplayAnnonceByIdAction($app));
+
+    $app->get('/api/annonces(/)', new actions\DisplayAllAnnoncesAction($app));
+
+    $app->get('/api/categorie/{id}', new actions\DisplayCategorieByIdAction($app));
+
+    $app->get('/api/categories(/)', new actions\DisplayAllCategoriesAction($app));
+
+    $app->get('/api/key', new actions\DisplayKeyGeneratorViewAction($app, $twig, $menu, $chemin, $cat));
+
+    $app->post('/api/key', new actions\GenerateNewKeyAction($app, $twig, $menu, $chemin, $cat));
     
 };

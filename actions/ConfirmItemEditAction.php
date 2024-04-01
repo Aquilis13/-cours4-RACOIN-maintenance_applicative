@@ -2,8 +2,8 @@
 
 namespace actions;
 
-use Slim\Http\Request;
-use Slim\Http\Response;
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
 
 /**
  * Route : [GET, POST] -> /item/{id}/confirm

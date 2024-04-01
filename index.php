@@ -16,23 +16,27 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
+use Slim\Factory\AppFactory;
+use DI\ContainerBuilder;
 
 
 connection::createConn();
 
-// Initialisation de Slim
-$app = new App([
-    'settings' => [
-        'displayErrorDetails' => true,
-    ],
+
+$builder = new ContainerBuilder();
+$builder->addDefinitions([
+    'displayErrorDetails' => true,
 ]);
+
+$c=$builder->build();
+$app = AppFactory::createFromContainer($c);
 
 // Initialisation de Twig
 $loader = new FilesystemLoader(__DIR__ . '/template');
 $twig   = new Environment($loader);
 
 // Ajout d'un middleware pour le trailing slash
-$app->add(new middlewares\TrailingSlashMiddleware());
+// $a:pp->add(new middlewares\TrailingSlashMiddleware());
 
 if (!isset($_SESSION)) {
     session_start();
