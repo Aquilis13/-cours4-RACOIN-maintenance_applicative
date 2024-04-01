@@ -24,7 +24,7 @@ final class DisplayItemAction {
     }
 
     public function __invoke(Request $request, Response $response, array $args): Response {
-        $n     = $args['n'];
+        $n    = $args['n'];
         $item = new item();
         $item->afficherItem($this->twig, $this->menu, $this->chemin, $n, $this->cat->getCategories());
 

@@ -29,9 +29,9 @@ final class ProcessItemEditAction {
 
     public function __invoke(Request $request, Response $response, array $args): Response {
         $id          = $args['id'];
-    $allPostVars = $request->getParsedBody();
-    $item        = new item();
-    $item->modifyPost($this->twig, $this->menu, $this->chemin, $id, $allPostVars, $this->cat->getCategories(), $this->dpt->getAllDepartments());
+        $allPostVars = $request->getParsedBody();
+        $item        = new item();
+        $item->modifyPost($this->twig, $this->menu, $this->chemin, $id, $allPostVars, $this->cat->getCategories(), $this->dpt->getAllDepartments());
 
         return $response;
     }

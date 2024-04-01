@@ -27,7 +27,7 @@ final class ProcessSearchAction {
 
     public function __invoke(Request $request, Response $response, array $args): Response {
         $array = $request->getParsedBody();
-        $s     = new controller\Search();
+        $s     = new \controller\Search();
         $s->research($array, $this->twig, $this->menu, $this->chemin, $this->cat->getCategories());
 
         return $response;
