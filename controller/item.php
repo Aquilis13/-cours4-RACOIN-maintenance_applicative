@@ -11,10 +11,10 @@ use model\Categorie;
 #[AllowDynamicProperties] class item {
     public function __construct(){
     }
-    function afficherItem($twig, $menu, $chemin, $n, $cat): void
+    function afficherItem($twig, $menu, $chemin, $idItem, $cat): void
     {
 
-        $this->annonce = Annonce::find($n);
+        $this->annonce = Annonce::find($idItem);
         if(!isset($this->annonce)){
             echo "404";
             return;
@@ -23,15 +23,15 @@ use model\Categorie;
         $menu = array(
             array('href' => $chemin,
                 'text' => 'Acceuil'),
-            array('href' => $chemin."/cat/".$n,
+            array('href' => $chemin."/cat/".$idItem,
                 'text' => Categorie::find($this->annonce->id_categorie)?->nom_categorie),
-            array('href' => $chemin."/item/".$n,
+            array('href' => $chemin."/item/".$idItem,
             'text' => $this->annonce->titre)
         );
 
         $this->annonceur = Annonceur::find($this->annonce->id_annonceur);
         $this->departement = Departement::find($this->annonce->id_departement );
-        $this->photo = Photo::where('id_annonce', '=', $n)->get();
+        $this->photo = Photo::where('id_annonce', '=', $idItem)->get();
         $template = $twig->load("item.html.twig");
         echo $template->render(array("breadcrumb" => $menu,
             "chemin" => $chemin,
@@ -42,8 +42,8 @@ use model\Categorie;
             "categories" => $cat));
     }
 
-    function supprimerItemGet($twig, $menu, $chemin,$n){
-        $this->annonce = Annonce::find($n);
+    function supprimerItemGet($twig, $menu, $chemin,$idItem){
+        $this->annonce = Annonce::find($idItem);
         if(!isset($this->annonce)){
             echo "404";
             return;
@@ -55,12 +55,12 @@ use model\Categorie;
     }
 
 
-    function supprimerItemPost($twig, $menu, $chemin, $n, $cat){
-        $this->annonce = Annonce::find($n);
+    function supprimerItemPost($twig, $menu, $chemin, $idItem, $cat){
+        $this->annonce = Annonce::find($idItem);
         
         $validPassword = password_verify($_POST["pass"],$this->annonce->mdp);
         if($validPassword){
-            photo::where('id_annonce', '=', $n)->delete();
+            photo::where('id_annonce', '=', $idItem)->delete();
             $this->annonce->delete();
         }
 
@@ -84,8 +84,8 @@ use model\Categorie;
             "annonce" => $this->annonce));
     }
 
-    function modifyPost($twig, $menu, $chemin, $n, $cat, $dpt){
-        $this->annonce = Annonce::find($n);
+    function modifyPost($twig, $menu, $chemin, $idItem, $cat, $dpt){
+        $this->annonce = Annonce::find($idItem);
         $this->annonceur = Annonceur::find($this->annonce->id_annonceur);
         $this->categItem = Categorie::find($this->annonce->id_categorie)->nom_categorie;
         $this->dptItem = Departement::find($this->annonce->id_departement)->nom_departement;

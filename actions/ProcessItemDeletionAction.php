@@ -24,9 +24,9 @@ final class ProcessItemDeletionAction {
     }
 
     public function __invoke(Request $request, Response $response, array $args): Response {
-        $n    = $args['n'];
+        $numeroItem    = $args['n'];
         $item = new item();
-        $item->supprimerItemPost($this->twig, $this->menu, $this->chemin, $n, $this->cat->getCategories());
+        $item->supprimerItemPost($this->twig, $this->menu, $this->chemin, $numeroItem, $this->cat->getCategories());
 
         return $response;
     }

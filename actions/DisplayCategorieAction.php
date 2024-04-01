@@ -24,9 +24,9 @@ final class DisplayCategorieAction {
     }
 
     public function __invoke(Request $request, Response $response, array $args): Response {
-        $n = $args['n'];
+        $numeroCategorie = $args['n'];
         $categorie = new getCategorie();
-        $categorie->displayCategorie($this->twig, $this->menu, $this->chemin, $this->cat->getCategories(), $n);
+        $categorie->displayCategorie($this->twig, $this->menu, $this->chemin, $this->cat->getCategories(), $numeroCategorie);
 
         return $response;
     }

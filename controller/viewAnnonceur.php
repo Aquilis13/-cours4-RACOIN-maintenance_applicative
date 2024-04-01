@@ -14,13 +14,13 @@ use model\Photo;
 class viewAnnonceur {
     public function __construct(){
     }
-    function afficherAnnonceur($twig, $menu, $chemin, $n, $cat) {
-        $this->annonceur = annonceur::find($n);
+    function afficherAnnonceur($twig, $menu, $chemin, $idAnnonceur, $cat) {
+        $this->annonceur = annonceur::find($idAnnonceur);
         if(!isset($this->annonceur)){
             echo "404";
             return;
         }
-        $tmp = annonce::where('id_annonceur','=',$n)->get();
+        $tmp = annonce::where('id_annonceur','=',$idAnnonceur)->get();
 
         $annonces = [];
         foreach ($tmp as $a) {

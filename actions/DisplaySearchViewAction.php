@@ -26,8 +26,8 @@ final class DisplaySearchViewAction {
     }
 
     public function __invoke(Request $request, Response $response, array $args): Response {
-        $s = new Search();
-        $s->show($this->twig, $this->menu, $this->chemin, $this->cat->getCategories());
+        $search = new Search();
+        $search->show($this->twig, $this->menu, $this->chemin, $this->cat->getCategories());
 
         return $response;
     }
