@@ -6,6 +6,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use model\Categorie;
 use model\Annonceur;
+use model\Annonce;
 use model\Departement;
 
 /**
@@ -25,7 +26,6 @@ final class DisplayAnnonceByIdAction {
         $return      = Annonce::select($annonceList)->find($id);
 
         if (isset($return)) {
-            $response->headers->set('Content-Type', 'application/json');
             $return->categorie     = Categorie::find($return->categorie);
             $return->annonceur     = Annonceur::select('email', 'nom_annonceur', 'telephone')
                 ->find($return->annonceur);
@@ -33,7 +33,10 @@ final class DisplayAnnonceByIdAction {
             $links                 = [];
             $links['self']['href'] = '/api/annonce/' . $return->id_annonce;
             $return->links         = $links;
-            echo $return->toJson();
+
+            $response->getBody()->write($return->toJson());
+            
+            return $response->withHeader('Content-Type', 'application/json');
         } else {
             $this->app->notFound();
         }

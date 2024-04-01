@@ -18,17 +18,16 @@ final class DisplayAllCategoriesAction {
     }
 
     public function __invoke(Request $request, Response $response, array $args): Response {
-        $response->headers->set('Content-Type', 'application/json');
-        $c     = Categorie::get();
+        $categories     = Categorie::get();
         $links = [];
-        foreach ($c as $cat) {
-            $links['self']['href'] = '/api/categorie/' . $cat->id_categorie;
-            $cat->links            = $links;
+        foreach ($categories as $categorie) {
+            $links['self']['href'] = '/api/categorie/' . $categorie->id_categorie;
+            $categorie->links            = $links;
         }
         $links['self']['href'] = '/api/categories/';
-        $c->links              = $links;
-        echo $c->toJson();
+        $categories->links              = $links;
 
-        return $response;
+        $response->getBody()->write($categories->toJson());            
+        return $response->withHeader('Content-Type', 'application/json');
     }
 }

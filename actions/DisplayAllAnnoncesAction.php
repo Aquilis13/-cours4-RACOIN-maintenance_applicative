@@ -19,19 +19,19 @@ final class DisplayAllAnnoncesAction {
 
     public function __invoke(Request $request, Response $response, array $args): Response {
         $annonceList = ['id_annonce', 'prix', 'titre', 'ville'];
-        $response->headers->set('Content-Type', 'application/json');
-        $a     = Annonce::all($annonceList);
+
+        $annonces     = Annonce::all($annonceList);
         $links = [];
         
-        foreach ($a as $ann) {
-            $links['self']['href'] = '/api/annonce/' . $ann->id_annonce;
-            $ann->links            = $links;
+        foreach ($annonces as $annonce) {
+            $links['self']['href'] = '/api/annonce/' . $annonce->id_annonce;
+            $annonce->links            = $links;
         }
         
         $links['self']['href'] = '/api/annonces/';
-        $a->links              = $links;
-        echo $a->toJson();
+        $annonces->links              = $links;
 
-        return $response;
+        $response->getBody()->write($annonces->toJson());            
+        return $response->withHeader('Content-Type', 'application/json');
     }
 }
