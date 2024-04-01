@@ -1,16 +1,17 @@
 <?php
 require 'vendor/autoload.php';
 
-use controller\getCategorie;
-use controller\getDepartment;
-use controller\index;
-use controller\item;
+use App\controller\getCategorie;
+use App\controller\getDepartment;
+use App\controller\index;
+use App\controller\item;
 use db\connection;
 
-use model\Annonce;
-use model\Categorie;
-use model\Annonceur;
-use model\Departement;
+use App\model\Annonce;
+use App\model\Categorie;
+use App\model\Annonceur;
+use App\model\Departement;
+
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;

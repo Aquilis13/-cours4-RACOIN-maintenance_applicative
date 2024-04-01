@@ -12,12 +12,12 @@
         "phpunit/phpunit": "^11.0.7"
     },
     "autoload":{
-        "psr-0":{
-            "controller":"",
-            "model": "",
-            "db": "",
-            "actions":"",
-            "middlewares":""
+        "psr-4":{
+            "App\\controller\\":"./src/controller/",
+            "App\\model\\": "./src/model/",
+            "db\\": "./db/",
+            "App\\actions\\":"./src/actions/",
+            "App\\middlewares\\":"./src/middlewares/"
         }
     },
     "config": {
