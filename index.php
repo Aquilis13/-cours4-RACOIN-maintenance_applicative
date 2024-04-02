@@ -5,7 +5,7 @@ use App\controller\getCategorie;
 use App\controller\getDepartment;
 use App\controller\index;
 use App\controller\item;
-use db\connection;
+use App\db\connection;
 
 use App\model\Annonce;
 use App\model\Categorie;
