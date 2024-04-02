@@ -9,13 +9,13 @@ use App\model\Annonceur;
 
 class getCategorie {
 
-    protected $categories = array();
+    protected array $categories = array();
 
-    public function getCategories() {
+    public function getCategories() : array {
         return Categorie::orderBy('nom_categorie')->get()->toArray();
     }
 
-    public function getCategorieContent($chemin, $idCategorie) {
+    public function getCategorieContent(string $chemin, string $idCategorie) : void {
         $tmp = Annonce::with("Annonceur")->orderBy('id_annonce','desc')->where('id_categorie', "=", $idCategorie)->get();
         $annonce = [];
         foreach($tmp as $t) {
@@ -34,8 +34,8 @@ class getCategorie {
         }
         $this->annonce = $annonce;
     }
-
-    public function displayCategorie($twig, $menu, $chemin, $cat, $idCategorie) {
+ 
+    public function displayCategorie(\Twig\Environment $twig, array $menu, string $chemin, $cat, string $idCategorie) : void {
         $template = $twig->load("index.html.twig");
         $menu = array(
             array('href' => $chemin,

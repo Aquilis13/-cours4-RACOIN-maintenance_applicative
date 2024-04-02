@@ -8,9 +8,9 @@ use App\model\Annonceur;
 
 class index
 {
-    protected $annonce = array();
+    protected array $annonce = array();
 
-    public function displayAllAnnonce($twig, $menu, $chemin, $cat)
+    public function displayAllAnnonce(\Twig\Environment $twig, array $menu, string $chemin, $cat) : void
     {
         $template = $twig->load("index.html.twig");
         $menu     = array(
@@ -29,7 +29,7 @@ class index
         ));
     }
 
-    public function getAll($chemin)
+    public function getAll(string $chemin) : void
     {
         $tmp     = Annonce::with("Annonceur")->orderBy('id_annonce', 'desc')->take(12)->get();
         $annonce = [];

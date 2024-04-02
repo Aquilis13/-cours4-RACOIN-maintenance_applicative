@@ -7,7 +7,7 @@ use App\model\Categorie;
 
 class Search {
 
-    function show($twig, $menu, $chemin, $cat) {
+    function show(\Twig\Environment $twig, array $menu, string $chemin, $cat) :void {
         $template = $twig->load("search.html.twig");
         $menu = array(
             array('href' => $chemin,
@@ -22,7 +22,7 @@ class Search {
         ));
     }
 
-    function research($array, $twig, $menu, $chemin, $cat) {
+    function research(array $array, \Twig\Environment $twig, array $menu, string $chemin, $cat) : void {
         $template = $twig->load("index.html.twig");
         $menu = array(
             array('href' => $chemin,
