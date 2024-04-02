@@ -20,6 +20,8 @@ use Twig\Loader\FilesystemLoader;
 use Slim\Factory\AppFactory;
 use DI\ContainerBuilder;
 
+use App\middlewares\TrailingSlashMiddleware;
+use App\middlewares\HttpLoggerMiddleware;
 
 connection::createConn();
 
@@ -37,7 +39,8 @@ $loader = new FilesystemLoader(__DIR__ . '/template');
 $twig   = new Environment($loader);
 
 // Ajout d'un middleware pour le trailing slash
-// $a:pp->add(new middlewares\TrailingSlashMiddleware());
+$app->add(new TrailingSlashMiddleware());
+$app->add(new HttpLoggerMiddleware());
 
 if (!isset($_SESSION)) {
     session_start();

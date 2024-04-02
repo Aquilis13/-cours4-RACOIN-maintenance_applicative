@@ -9,7 +9,9 @@
         "illuminate/database": "11.*",
         "ext-mysqli": "*",
         "ext-pdo": "*",
-        "phpunit/phpunit": "^11.0.7"
+        "phpunit/phpunit": "^11.0.7",
+        "monolog/monolog": "^3.5",
+        "psr/log": "^3.0"
     },
     "autoload":{
         "psr-4":{
@@ -17,7 +19,9 @@
             "App\\model\\": "./src/model/",
             "App\\db\\": "./src/db/",
             "App\\actions\\":"./src/actions/",
-            "App\\middlewares\\":"./src/middlewares/"
+            "App\\middlewares\\":"./src/middlewares/",
+            "App\\utils\\":"./src/utils/",
+            "logs\\" : "./logs/"
         }
     },
     "config": {
