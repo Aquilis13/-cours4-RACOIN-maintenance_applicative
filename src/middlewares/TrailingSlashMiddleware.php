@@ -15,6 +15,7 @@ class TrailingSlashMiddleware {
             $uri = $uri->withPath(substr($path, 0, -1));
             
             if ($request->getMethod() == 'GET') {
+                $response = $handler->handle($request);
                 return $response->withRedirect((string)$uri, 301);
             } 
             $request = $request->withUri($uri);
