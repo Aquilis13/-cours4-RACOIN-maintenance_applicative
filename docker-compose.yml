@@ -3,14 +3,14 @@ services:
         build: './docker/php'
         # user: ${UID:-1000}:${GID:-1000}
         ports:
-            - "8081:80"
+            - "8083:80"
         volumes:
             - ./:/var/www/html
         command: php -S 0.0.0.0:80 -t ./public
     db:
         image: mariadb:10
         ports:
-            - "3309:3306"
+            - "3305:3306"
         environment:
             MARIADB_ROOT_PASSWORD: root
             MARIADB_DATABASE: database
@@ -24,5 +24,11 @@ services:
             - .:/app
         working_dir: /app
         command: npm run watch
+
+    adminer:
+        image: adminer
+        ports:
+        - '8089:8080'
+        
 volumes:
     db-data:
