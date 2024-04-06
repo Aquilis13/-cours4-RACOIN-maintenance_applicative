@@ -4,10 +4,16 @@ namespace App\actions;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use OpenApi\Annotations as OA;
+
 use App\controller\getCategorie;
 
 /**
- * Route : [GET] -> /api(/)
+ * @OA\Get(path="/api",
+ * tags={"Api"},
+ *  
+ *   @OA\Response(response="200", description="Documentation des routes de l'api")
+ * )
  */
 final class DisplayApiViewAction {
 

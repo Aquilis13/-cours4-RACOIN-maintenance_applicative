@@ -4,11 +4,32 @@ namespace App\actions;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use OpenApi\Annotations as OA;
 use App\model\Annonce;
 use App\model\Categorie;
 
 /**
- * Route : [GET] -> /api/categorie/{id}
+ * @OA\Get(path="/api/categorie/{id}", 
+ * tags={"Api"},
+ * 
+ * @OA\Parameter(
+ *   parameter="id",
+ *   name="id",
+ *   description="Identifiant d'une categorie.",
+ *   @OA\Schema(
+ *     type="string"
+ *   ),
+ *   in="path",
+ *   required=true
+ * ),
+ * 
+ * @OA\Response(
+ *     response="200", 
+ *     description="Données d'une categorie pour un identifiant donnée",
+ *     @OA\JsonContent(type="string", description="is json")
+ * ),
+ * @OA\Response(response="404", description="Not Found")
+ * )
  */
 final class DisplayCategorieByIdAction {
 
@@ -26,9 +47,9 @@ final class DisplayCategorieByIdAction {
             ->get();
         $links = [];
 
-        foreach ($annonces as $annonce) {
-            $links['self']['href'] = '/api/annonce/' . $annonce->id_annonce;
-            $annonce->links            = $links;
+        foreach ($annonces as $categorie) {
+            $links['self']['href'] = '/api/categorie/' . $categorie->id_annonce;
+            $categorie->links            = $links;
         }
 
         $categorie                     = Categorie::find($id);

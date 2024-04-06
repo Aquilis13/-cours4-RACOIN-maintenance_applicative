@@ -4,11 +4,27 @@ namespace App\actions;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use OpenApi\Annotations as OA;
 use App\controller\item;
 use App\controller\getCategorie;
 
 /**
- * Route : [GET] -> /item/{n}
+ * @OA\Get(path="/item/{n}", 
+ * tags={"Application"},
+ * 
+ * @OA\Parameter(
+ *   parameter="n",
+ *   name="n",
+ *   description="Numéro d'une annonce'",
+ *   @OA\Schema(
+ *     type="string"
+ *   ),
+ *   in="path",
+ *   required=true
+ * ),
+ * @OA\Response(response="200", description="Detail d'une annonce."),
+ * @OA\Response(response="404", description="Not Found")
+ * )
  */
 final class DisplayItemAction {
 

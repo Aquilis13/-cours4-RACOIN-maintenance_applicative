@@ -4,10 +4,24 @@ namespace App\actions;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use OpenApi\Annotations as OA;
 use App\model\Annonce;
 
 /**
- * Route : [GET] -> /api/annonces/
+ * @OA\Get(path="/api/annonces/", 
+ * tags={"Api"},
+ *      
+ *     @OA\Response(
+ *         response="200", 
+ *         description="Liste des annonces",
+ *         @OA\JsonContent(
+ *             type="array", 
+*              @OA\Items(ref="/components/schemas/OAAnnonce"),
+ *             description="Response is display in Json"
+ *         )
+ *     ),
+ *   
+ * )
  */
 final class DisplayAllAnnoncesAction {
 

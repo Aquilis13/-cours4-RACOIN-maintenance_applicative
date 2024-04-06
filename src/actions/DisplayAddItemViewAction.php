@@ -4,12 +4,20 @@ namespace App\actions;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use OpenApi\Annotations as OA;
+
 use App\controller\addItem;
 use App\controller\getCategorie;
 use App\controller\getDepartment;
 
 /**
- * Route : [GET] -> /add
+ * @OA\Get(path="/add", 
+ *  tags={"Application"},
+ * 
+ *  @OA\Response(
+ *      response="200", 
+ *      description="Page pour la création d'une annonce"),
+ * )
  */
 final class DisplayAddItemViewAction {
     

@@ -4,10 +4,26 @@ namespace App\actions;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use OpenApi\Annotations as OA;
 use App\controller\item;
 
 /**
- * Route : [GET] -> /item/{id}/edit
+ * @OA\Get(path="/item/{id}/edit", 
+ * tags={"Application"},
+ * 
+ * @OA\Parameter(
+ *   parameter="n",
+ *   name="n",
+ *   description="Numéro d'une annonce'",
+ *   @OA\Schema(
+ *     type="string"
+ *   ),
+ *   in="path",
+ *   required=true
+ * ),
+ * @OA\Response(response="200", description="Permet d'aller modifier une annonce."),
+ * @OA\Response(response="404", description="Not Found")
+ * )
  */
 final class DisplayEditItemViewAction {
 

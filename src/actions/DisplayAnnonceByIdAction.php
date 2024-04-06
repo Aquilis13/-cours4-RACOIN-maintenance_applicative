@@ -4,13 +4,36 @@ namespace App\actions;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use OpenApi\Annotations as OA;
+
 use App\model\Categorie;
 use App\model\Annonceur;
 use App\model\Annonce;
 use App\model\Departement;
 
 /**
- * Route : [GET] -> /api/annonce/{id}
+ * @OA\Get(path="/api/annonce/{id}", 
+ * tags={"Api"},
+ * 
+ * 
+ * @OA\Parameter(
+ *   parameter="id",
+ *   name="id",
+ *   description="Identifiant d'une annonce.",
+ *   @OA\Schema(
+ *     type="string"
+ *   ),
+ *   in="path",
+ *   required=true
+ * ),
+ * 
+ * @OA\Response(
+ *     response="200", 
+ *     description="Données d'une annonce pour un identifiant donnée",
+ *     @OA\JsonContent(type="string", description="is json")
+ * ),
+ * @OA\Response(response="404", description="Not Found")
+ * )
  */
 final class DisplayAnnonceByIdAction {
 

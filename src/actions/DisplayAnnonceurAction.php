@@ -4,11 +4,28 @@ namespace App\actions;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use OpenApi\Annotations as OA;
+
 use App\controller\viewAnnonceur;
 use App\controller\getCategorie;
 
 /**
- * Route : [GET] -> /annonceur/{n}
+ * @OA\Get(path="/annonceur/{n}", 
+ * tags={"Application"},
+ * 
+ * @OA\Parameter(
+ *   parameter="n",
+ *   name="n",
+ *   description="Numero de l'annonceur",
+ *   @OA\Schema(
+ *     type="string"
+ *   ),
+ *   in="path",
+ *   required=true
+ * ),
+ * @OA\Response(response="200", description="Page qui affiche un annonceur et ses annonces."),
+ * @OA\Response(response="404", description="Not Found")
+ * )
  */
 final class DisplayAnnonceurAction {
 

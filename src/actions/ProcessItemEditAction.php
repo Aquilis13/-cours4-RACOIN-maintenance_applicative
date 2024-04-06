@@ -4,12 +4,28 @@ namespace App\actions;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use OpenApi\Annotations as OA;
 use App\controller\item;
 use App\controller\getCategorie;
 use App\controller\getDepartment;
 
 /**
- * Route : [POST] -> /item/{id}/edit
+ * @OA\Post(path="/item/{id}/edit", 
+ * tags={"Application"},
+ * 
+ * @OA\Parameter(
+ *   parameter="n",
+ *   name="n",
+ *   description="Numéro d'une annonce'",
+ *   @OA\Schema(
+ *     type="string"
+ *   ),
+ *   in="path",
+ *   required=true
+ * ),
+ * @OA\Response(response="200", description="Sauvegarde la modification d'une annonce."),
+ * @OA\Response(response="404", description="Not Found")
+ * )
  */
 final class ProcessItemEditAction {
 

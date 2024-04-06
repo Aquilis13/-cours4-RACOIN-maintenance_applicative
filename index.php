@@ -23,6 +23,8 @@ use DI\ContainerBuilder;
 use App\middlewares\TrailingSlashMiddleware;
 use App\middlewares\HttpLoggerMiddleware;
 
+use App\Routes;
+
 connection::createConn();
 
 
@@ -68,6 +70,6 @@ $cat = new getCategorie();
 $dpt = new getDepartment();
 
 // Les routes sont importer ici
-(require_once __DIR__ . '/public/routes.php')($app, $twig, $menu, $chemin, $cat, $dpt);
+new Routes($app, $twig, $menu, $chemin, $cat, $dpt);
 
 $app->run();

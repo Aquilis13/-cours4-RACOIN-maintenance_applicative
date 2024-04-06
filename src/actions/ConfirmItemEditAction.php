@@ -4,9 +4,52 @@ namespace App\actions;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use OpenApi\Annotations as OA;
 
 /**
- * Route : [GET, POST] -> /item/{id}/confirm
+ * @OA\Get(path="/item/{id}/confirm",
+ * tags={"Application"},
+ * 
+ * @OA\Parameter(
+ *   parameter="id",
+ *   name="id",
+ *   description="Identifiant d'une annonce.",
+ *   @OA\Schema(
+ *     type="string"
+ *   ),
+ *   in="path",
+ *   required=true
+ * ),
+ * 
+ * @OA\Response(
+ *     response="200", 
+ *     description="Confirmation de l'édition d'une annonce pour un identifiant donné"
+ * ),
+ * @OA\Response(response="404", description="Not Found")
+ * )
+ */
+
+ /** 
+ * @OA\Post(path="/item/{id}/confirm",
+ * tags={"Application"},
+ * 
+ * @OA\Parameter(
+ *   parameter="id",
+ *   name="id",
+ *   description="Identifiant d'une annonce.",
+ *   @OA\Schema(
+ *     type="string"
+ *   ),
+ *   in="path",
+ *   required=true
+ * ),
+ * 
+ * @OA\Response(
+ *     response="200", 
+ *     description="Confirmation de l'édition d'une annonce pour un identifiant donné"
+ * ),
+ * @OA\Response(response="404", description="Not Found")
+ * )
  */
 final class ConfirmItemEditAction {
  

@@ -4,11 +4,16 @@ namespace App\actions;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use OpenApi\Annotations as OA;
 use App\controller\KeyGenerator;
 use App\controller\getCategorie;
 
 /**
- * Route : [GET] -> /api/key
+ * @OA\Get(path="/api/key", 
+ * tags={"Api"},
+ * 
+ *   @OA\Response(response="200", description="Page pour générer une clé API")
+ * )
  */
 final class DisplayKeyGeneratorViewAction {
 

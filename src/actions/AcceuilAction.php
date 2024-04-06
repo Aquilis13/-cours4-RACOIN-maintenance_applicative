@@ -5,11 +5,15 @@ namespace App\actions;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use App\controller\index;
+use OpenApi\Annotations as OA;
 
 use App\controller\getCategorie;
 
 /**
- * Route : [GET] -> /
+ * @OA\Get(path="/", 
+ *   tags={"Application"},
+ *   @OA\Response(response="200", description="Page d'accueil")
+ * )
  */
 final class AcceuilAction {
  

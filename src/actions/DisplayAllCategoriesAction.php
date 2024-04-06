@@ -4,10 +4,24 @@ namespace App\actions;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use OpenApi\Annotations as OA;
 use App\model\Categorie;
 
 /**
- * Route : [GET] -> /api/categories/
+ * @OA\Get(path="/api/categories/", 
+ * tags={"Api"},
+ * 
+ *     @OA\Response(
+ *         response="200", 
+ *         description="Liste des catégories d'annonces",
+ *         @OA\JsonContent(
+ *             type="array", 
+ *             @OA\Items(ref="components/schemas/OACategorie"),
+ *             description="Response is display in Json"
+ *         )
+ *     ),
+ *   
+ * )
  */
 final class DisplayAllCategoriesAction {
 
